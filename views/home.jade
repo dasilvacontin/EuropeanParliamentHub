@@ -1,0 +1,114 @@
+extends layout
+
+block imports
+  != css('home')
+  != css('flipclock')
+  != js('jquery-1.11.0')
+  != js('flipclock.min')
+
+  != css('liquid-slider')
+  != css('animate')
+
+  !=js ('jquery.easing.1.3')
+  !=js ('jquery.touchSwipe.min')
+  !=js ('jquery.liquid-slider.min')
+
+block prenavigation
+  div#header
+    div.valigner
+      h1 Parlamentemos
+      //h1 #AskTheParlament
+      h2 ¿Quién te representa en el Parlamento Europeo?
+
+block content
+  div#clock-container
+    div.the-clock
+  br
+  br
+  br
+  h1(style='font-size:60px') ¿Sabías que...
+  div#sabias-que.liquid-slider
+    -var sabies = ["El PP NO HA DADO INFORMACIÓN sobre quiénes son sus candidatos. Red Ciudadana Partido X y VOX tampoco", "ERC y CDC solo han informado de dos candidatos, ICV de uno", "El número dos de ERC estuvo 36 años en el PSC y llegó a Conseller de Educació", "El PSC, UDC y la Confederación Pirata son los únicos que han hecho públicas sus listas", "CDC y UDC aún no han acordado la lista conjunta de su coalición CIU", "Ramon Tremosa, único candidato conocido de CDC, es también el único diputado que opta a la reelección de momento", "Los candidatos de CDC y los de UDC pertenecen a grupos parlamentarios europeos diferentes", "Los candidatos del PP y los de UDC están en el mismo grupo parlamentario europeo", "ERC y Ciudadanos son partidos con diputados en el Parlamento catalán que aspiran a tenerlos también en el europeo", "Tres partidos nuevos optan a tener representación europea: Confederación Pirata, Red Ciudadana Partido X y VOX", "Hay 54 diputados españoles en el Parlamento Europeo", "Alejo Vidal-Quadras, después de 15 años como eurodiputado del PP, acaba de fundar el partido VOX y ahora aparece como diputado de este partido", "El diputado de ICV y el de IU pertenecen a grupos parlamentarios europeos distintos"]
+    -for (var i = 0; i < sabies.length; ++i)
+      -var saps = sabies[i]
+      section
+        h1 #{saps}
+
+  div(class="article-column")
+
+    for article, i in articles
+      if i%3 == 0
+        div.news-card
+
+          //img.img-highlight(src="#{article.img}")
+
+          h5 Dirigido a #{article.dirigidoA}
+
+          div
+            div.pimg
+            h4 #{article.pregunta}
+
+          div
+            div.pimg
+            p
+              | #{article.respuesta}
+
+          a(type="button" class="btn btn-default" read-more-link, href="#{article.url}") Read more
+
+  div(class="article-column")
+
+    for article, i in articles
+      if i%3 == 1
+        div.news-card
+
+          //img.img-highlight(src="#{article.img}")
+
+          h5 Dirigido a #{article.dirigidoA}
+
+          div
+            div.pimg
+            h4 #{article.pregunta}
+
+          div
+            div.pimg
+            p
+              | #{article.respuesta}
+
+          a(type="button" class="btn btn-default" read-more-link, href="#{article.url}") Read more
+
+  div(class="article-column")
+
+    for article, i in articles
+      if i%3 == 2
+        div.news-card
+
+          //img.img-highlight(src="#{article.img}")
+
+          h5 Dirigido a #{article.dirigidoA}
+
+          div
+            div.pimg
+            h4 #{article.pregunta}
+
+          div
+            div.pimg
+            p
+              | #{article.respuesta}
+
+          a(type="button" class="btn btn-default" read-more-link, href="#{article.url}") Read more
+
+  script(src="http://www.reddit.com/r/europe//hot/.embed?limit=10&t=all&expanded=1&twocolumn=true")
+
+  script.
+    console.log("js is working!")
+    var endDate = new Date("9:00:00 5/25/2014")
+
+    var clock = $('.the-clock').FlipClock((+endDate - (new Date()))/1000, {
+      countdown: true,
+      clockFace: 'DailyCounter',
+      showSeconds: false
+    });
+
+    $(function(){
+      $('#sabias-que').liquidSlider({autoSlide:true, autoSlideInterval:  5000});
+    });

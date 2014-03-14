@@ -1,0 +1,48 @@
+extends ../layout
+
+block imports
+  != js('jquery-1.11.0')
+  != js('jquery-migrate-git.min')
+  != js('jquery.asmselect')
+  != css('jquery.asmselect')
+
+block content
+  .page-header
+    h2
+      i.fa.fa-picture-o
+      | Party DB API
+  
+  form(method='POST')
+    legend Register a new party
+    input(type='hidden', name='_csrf', value=token)
+    .col-sm-8.col-sm-offset-2
+      if secrets.localAuth
+        .form-group
+          label.control-label(for='email') Party Name
+          input.form-control(type='text', name='name', id='name', autofocus=true)
+        .form-group
+          label.control-label(for='text') Acronym
+          input.form-control(type='text', name='acronym', id='acronym')
+        .form-group
+          label.control-label(for='text') Logo IMG URL
+          input.form-control(type='text', name='logo', id='logo', placeholder='URL')
+        .form-group
+          label.control-label(for='text') Website URL
+          input.form-control(type='text', name='website', id='website', placeholder='URL')
+        .form-group
+          label.control-label(for='text') Candidates
+          select.form-control(multiple, name='candidates', title='Click to select a candidate')
+            option(value='1') name1
+            option(value='2') name2
+            option(value='3') name3
+        .form-group
+          button.btn.btn-primary(type='submit')
+            | Save in DB
+  script.
+    $(document).ready(function() {
+      $("select[multiple]").asmSelect({
+        animate: true,
+        addItemTarget: 'bottom',
+        highlight: true
+      });
+    });

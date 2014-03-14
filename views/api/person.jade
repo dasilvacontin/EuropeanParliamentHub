@@ -1,0 +1,36 @@
+extends ../layout
+
+block imports
+  != js('jquery-1.11.0')
+  != js('jquery-migrate-git.min')
+  != js('jquery.asmselect')
+  != css('jquery.asmselect')
+
+block content
+  -var fields = ["name", "surname", "pimg", "birthdate", "deputyForParty", "candidateForParty", "currentPosition", "profession", "twitter", "email", "web"];
+  .page-header
+    h2
+      i.fa.fa-picture-o
+      | Person DB API
+  
+  form(method='POST')
+    legend Register a new person
+    input(type='hidden', name='_csrf', value=token)
+    .col-sm-8.col-sm-offset-2
+      if secrets.localAuth
+        -for (var i = 0; i < fields.length; ++i)
+          -var prop = fields[i];
+          .form-group
+            label.control-label(for='#{prop}') #{prop}
+            input.form-control(type='text', name='#{prop}', id='#{prop}')
+        .form-group
+          button.btn.btn-primary(type='submit')
+            | Save in DB
+  script.
+    $(document).ready(function() {
+      $("select[multiple]").asmSelect({
+        animate: true,
+        addItemTarget: 'bottom',
+        highlight: true
+      });
+    });
